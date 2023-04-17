@@ -1,0 +1,949 @@
+﻿// Generated .IDL file (by the OLE/COM Object Viewer)
+// 
+// typelib filename: KillerNetworkService.exe
+
+[
+  uuid(A347736C-22E1-4E25-ADBC-76349A368F74),
+  version(1.0),
+  custom(DE77BA64-517C-11D1-A2DA-0000F8773CE9, 134283886),
+  custom(DE77BA63-517C-11D1-A2DA-0000F8773CE9, 2147483647),
+  custom(DE77BA65-517C-11D1-A2DA-0000F8773CE9, "Created by MIDL version 8.01.0622 at Tue Jan 19 03:14:07 2038
+")
+
+]
+library KillerNetworkServiceLib
+{
+    // TLib : OLE Automation : {00020430-0000-0000-C000-000000000046}
+    importlib("stdole2.tlb");
+
+    // Forward declare all types defined in this typelib
+    interface IBandwidthControlManager;
+    dispinterface _INetworkManagerEvents;
+    interface INetworkManager;
+    interface IConfigurationManager;
+    interface IRulesManager;
+    interface IFactoryManager;
+    interface ICategoriesManager;
+    interface ISpeedTestManager;
+    interface IConfigurationFileManager;
+    interface IServiceManager;
+    interface IMultiInterfaceManager;
+    interface IMultiInterfaceRoutingManagerType1;
+    interface IMultiInterfaceRoutingManagerType2;
+    interface IActivityManager;
+    interface IGroupBoostManager;
+
+    [
+      uuid(7972960B-C3EE-4794-B28B-75F9D36760E6)
+    ]
+    coclass BandwidthControlManager {
+        [default] interface IBandwidthControlManager;
+    };
+
+    [
+      odl,
+      uuid(2E396495-F59E-4451-B55A-78DDA857F636),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IBandwidthControlManager : IDispatch {
+        [id(0x00000001), helpstring("Initializes the Out of Process COM Object")]
+        HRESULT Initialize(
+                        [in] long lVersionMajor, 
+                        [in] long lVersionMinor, 
+                        [in] long lIdentifier, 
+                        [in] BSTR bstrToken1, 
+                        [in] BSTR bstrToken2);
+        [id(0x00000002), helpstring("Gets the server Version")]
+        HRESULT GetVersion(
+                        [out] long* plVersionMajor, 
+                        [out] long* plVersionMinor);
+        [id(0x00000003), helpstring("Heartbeat Ping")]
+        HRESULT Ping([out, retval] VARIANT_BOOL* pVal);
+        [id(0x00000004), helpstring("Returns the FactoryManager COM Object")]
+        HRESULT GetFactoryManager([out, retval] IDispatch** ppFactoryManager);
+    };
+
+    [
+      uuid(559F99D3-58E9-4CAE-A7EE-8DE6B04F4129)
+    ]
+    dispinterface _INetworkManagerEvents {
+        properties:
+        methods:
+            [id(0x00000001), helpstring("Fires when a Network Interface is connected/disconnected")]
+            void NetworkInterfaceConnected(
+                            [in] BSTR bstrMACAddress, 
+                            [in] long lNetworkInterfaceType, 
+                            [in] VARIANT_BOOL bConnected);
+            [id(0x00000002), helpstring("Fires when a Network Information is changed")]
+            void NetworkInfoChanged([in] BSTR bstrMACAddress);
+    };
+
+    [
+      uuid(E98B67D8-F4B9-4706-9EE1-A24466FDCDA8)
+    ]
+    coclass NetworkManager {
+        [default] interface INetworkManager;
+        [default, source] dispinterface _INetworkManagerEvents;
+    };
+
+    [
+      odl,
+      uuid(27121ECB-32AC-4162-B64D-9DC4D00A0E08),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface INetworkManager : IDispatch {
+        [id(0x00000001), helpstring("Returns the list of Network Interfaces")]
+        HRESULT GetNetworkInterfaceList(
+                        [out] SAFEARRAY(BSTR)* ppArrayMACAddress, 
+                        [out] SAFEARRAY(BSTR)* ppArrayName, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInterfaceID, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInfoID, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInterfaceType, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInterfaceState);
+        [id(0x00000002), helpstring("Sets the Bandwidth Limits for a Network")]
+        HRESULT SetNetworkLimits(
+                        [in] BSTR bstrMACAddress, 
+                        [in] int64 i64BandwidthUp, 
+                        [in] int64 i64BandwidthDown);
+        [id(0x00000003), helpstring("Returns the details of the Network Interface/Adapter")]
+        HRESULT GetNetworkInterfaceDetails(
+                        [in] BSTR bstrMACAddress, 
+                        [out] BSTR* pbstrName, 
+                        [out] long* plNetworkInterfaceID, 
+                        [out] long* plNetworkInfoID, 
+                        [out] long* plNetworkInterfaceType, 
+                        [out] long* plNetworkInterfaceState, 
+                        [out] BSTR* pbstrIPV4Address, 
+                        [out] BSTR* pbstrIPV6Address, 
+                        [out] BSTR* pbstrDefaultGateway, 
+                        [out] BSTR* pbstrSubnetMask, 
+                        [out] long* plLinkSpeedUp, 
+                        [out] long* plLinkSpeedDown, 
+                        [out] long* plWirelessLinkMode, 
+                        [out] long* plWirelessAPBand, 
+                        [out] long* plWirelessSignalstrength);
+        [id(0x00000004), helpstring("Returns the list of Connected Access Points/Wi-fi Networks")]
+        HRESULT GetConnectedAccessPointDetailsList(
+                        [out] SAFEARRAY(BSTR)* ppArrayProfileName, 
+                        [out] SAFEARRAY(BSTR)* ppArraySSID, 
+                        [out] SAFEARRAY(BSTR)* ppArrayBSSID, 
+                        [out] SAFEARRAY(VARIANT_BOOL)* ppArraySecurityEnabled, 
+                        [out] SAFEARRAY(long)* ppArrayPhyType, 
+                        [out] SAFEARRAY(long)* ppArraySignalStrength, 
+                        [out] SAFEARRAY(long)* ppArrayTxRate, 
+                        [out] SAFEARRAY(long)* ppArrayRxRate, 
+                        [out] SAFEARRAY(long)* ppArrayFCSErrors, 
+                        [out] SAFEARRAY(long)* ppArrayDecryptErrors, 
+                        [out] SAFEARRAY(long)* ppArrayRetries, 
+                        [out] SAFEARRAY(long)* ppArrayTransmissionErrors, 
+                        [out] SAFEARRAY(long)* ppArrayPacketErrors);
+        [id(0x00000005), helpstring("Returns the list of active/available Access Points/Wi-fi Networks")]
+        HRESULT GetAvailableAccessPointList(
+                        [in] VARIANT_BOOL bOnlyRivet, 
+                        [out] SAFEARRAY(BSTR)* ppArraySSID, 
+                        [out] SAFEARRAY(BSTR)* ppArrayBSSID, 
+                        [out] SAFEARRAY(long)* ppArrayChannel, 
+                        [out] SAFEARRAY(long)* ppArraySignalStrength, 
+                        [out] SAFEARRAY(long)* ppArrayBand, 
+                        [out] SAFEARRAY(long)* ppArrayScore, 
+                        [out] SAFEARRAY(long)* ppArrayPhyType, 
+                        [out] SAFEARRAY(long)* ppArrayBSSChannelUtilization, 
+                        [out] SAFEARRAY(BSTR)* ppArrayDataRates, 
+                        [out] SAFEARRAY(long)* ppArrayHT_ChannelWidth, 
+                        [out] SAFEARRAY(long)* ppArrayHT_ShortGuardInterval, 
+                        [out] SAFEARRAY(long)* ppArrayHT_MCS, 
+                        [out] SAFEARRAY(long)* ppArrayHT_SpatialStreams, 
+                        [out] SAFEARRAY(long)* ppArrayHT_MaxDataRate, 
+                        [out] SAFEARRAY(long)* ppArrayVHT_ChannelWidth, 
+                        [out] SAFEARRAY(long)* ppArrayVHT_ShortGuardInterval, 
+                        [out] SAFEARRAY(long)* ppArrayVHT_SUMIMOBeamforming);
+        [id(0x00000006), helpstring("Returns the list of Network Information")]
+        HRESULT GetNetworkInfoList(
+                        [out] SAFEARRAY(BSTR)* ppArrayMACAddress, 
+                        [out] SAFEARRAY(BSTR)* ppArrayName, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInfoID, 
+                        [out] SAFEARRAY(VARIANT_BOOL)* ppArrayCurrentlyConnected, 
+                        [out] SAFEARRAY(BSTR)* ppArrayIPV4Address, 
+                        [out] SAFEARRAY(BSTR)* ppArrayIPV6Address, 
+                        [out] SAFEARRAY(int64)* ppArrayBandwidthUp, 
+                        [out] SAFEARRAY(int64)* ppArrayBandwidthDown, 
+                        [out] SAFEARRAY(int64)* ppArrayTimeLastConnected);
+        [id(0x00000007), helpstring("Returns the list of available Wifi Network Adapters")]
+        HRESULT GetAvailableWifiNetworkInterfaceList(
+                        [in] VARIANT_BOOL bOnlyRivet, 
+                        [out] SAFEARRAY(BSTR)* ppArrayDescription, 
+                        [out] SAFEARRAY(long)* ppArrayWifiInterfaceState);
+        [id(0x00000008), helpstring("Clears Both NetworkInfo and NetworkInterface lists")]
+        HRESULT ClearNetworkInfoAndInterfaceLists();
+        [id(0x00000009), helpstring("Returns if the Acess Point has a profile on any adapter")]
+        HRESULT DoesAcessPointHaveAProfile(
+                        [in] BSTR bstrSSID, 
+                        [out, retval] VARIANT_BOOL* pVal);
+        [id(0x0000000a), helpstring("Connects to the Acess Point.")]
+        HRESULT ConnectToAccessPoint(
+                        [in] BSTR bstrSSID, 
+                        [in] SAFEARRAY(BSTR) pArrayPreferredBSSID, 
+                        [in] BSTR bstrInterfaceGUID, 
+                        [in] VARIANT_BOOL bRequireProfile, 
+                        [in] VARIANT_BOOL bConnectOnCurrentlyConnectedInterface);
+    };
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0001 COM_API_Version;
+
+    typedef enum {
+        MAJOR = 4,
+        MINOR = 4
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0001;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0002 Constants;
+
+    typedef enum {
+        NO_BANDWIDTH_VALUE = 0xffffffff,
+        NO_PRIORITY_VALUE = 0xffffffff,
+        NO_NETWORKINTERFACEID_VALUE = 0xffffffff,
+        NO_NETWORKINFOID_VALUE = 0xffffffff
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0002;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0003 ServiceState;
+
+    typedef enum {
+        SERVICESTATE_STOPPED = 1,
+        SERVICESTATE_START_PENDING = 2,
+        SERVICESTATE_STOP_PENDING = 3,
+        SERVICESTATE_RUNNING = 4,
+        SERVICESTATE_CONTINUE_PENDING = 5,
+        SERVICESTATE_PAUSE_PENDING = 6,
+        SERVICESTATE_PAUSED = 7
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0003;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0004 ServiceStart;
+
+    typedef enum {
+        SERVICESTART_BOOT = 0,
+        SERVICESTART_SYSTEM = 1,
+        SERVICESTART_AUTO = 2,
+        SERVICESTART_DEMAND = 3,
+        SERVICESTART_DISABLED = 4
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0004;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0005 ServiceType;
+
+    typedef enum {
+        SERVICETYPE_KERNEL_DRIVER = 1,
+        SERVICETYPE_FILE_SYSTEM_DRIVER = 2,
+        SERVICETYPE_ADAPTER = 4,
+        SERVICETYPE_RECOGNIZER_DRIVER = 8,
+        SERVICETYPE_DRIVER = 11,
+        SERVICETYPE_SERVICE_WIN32_OWN_PROCESS = 16,
+        SERVICETYPE_SERVICE_WIN32_SHARE_PROCESS = 32,
+        SERVICETYPE_WIN32 = 48,
+        SERVICETYPE_INTERACTIVE_PROCESS = 256,
+        SERVICETYPE_TYPE_ALL = 319
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0005;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0006 RunSpeedTestOnNetworkConnectType;
+
+    typedef enum {
+        RUNSPEEDTESTONNETWORKCONNECTTYPE_NEVER = 0,
+        RUNSPEEDTESTONNETWORKCONNECTTYPE_DOWNLOAD = 1,
+        RUNSPEEDTESTONNETWORKCONNECTTYPE_UPLOAD = 2,
+        RUNSPEEDTESTONNETWORKCONNECTTYPE_DOWNLOAD_UPLOAD = 3
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0006;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0007 DynamicBandwidthServiceModeType;
+
+    typedef enum {
+        DYNAMICBANDWIDTHSERVICEMODETYPE_OFF = 0,
+        DYNAMICBANDWIDTHSERVICEMODETYPE_AUTO = 1,
+        DYNAMICBANDWIDTHSERVICEMODETYPE_EXTREME = 2
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0007;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0008 APBand;
+
+    typedef enum {
+        BAND_UNKNOWN = 0,
+        BAND_2_4GHZ = 1,
+        BAND_3_6GHZ = 2,
+        BAND_4_9GHZ = 3,
+        BAND_5GHZ = 4,
+        BAND_5_9GHZ = 5,
+        BAND_60GHZ = 6,
+        BAND_900GHZ = 7
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0008;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0009 RuleState;
+
+    typedef enum {
+        RULESTATE_UNKNOWN = 0xffffffff,
+        RULESTATE_DOESNOTEXISTS = 0,
+        RULESTATE_EXISTS = 1,
+        RULESTATE_HIDDEN = 3
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0009;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0010 WirelessLinkMode;
+
+    typedef enum {
+        WIRELESSLINKMODE_STATION = 1,
+        WIRELESSLINKMODE_IBSS_ADHOC_WFD = 2
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0010;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0011 Dot11PhysicalType;
+
+    typedef enum {
+        PHYSICAL_TYPE_UNKNOWN = 0,
+        PHYSICAL_TYPE_FHSS = 1,
+        PHYSICAL_TYPE_DSSS = 2,
+        PHYSICAL_TYPE_IRBASEBAND = 3,
+        PHYSICAL_TYPE_OFDM = 4,
+        PHYSICAL_TYPE_HRDSSS = 5,
+        PHYSICAL_TYPE_ERP = 6,
+        PHYSICAL_TYPE_HT = 7,
+        PHYSICAL_TYPE_VHT = 8
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0011;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0012 NetworkInterfaceType_Mask;
+
+    typedef enum {
+        NETWORKINTERFACETYPE_MASK_TYPE = 0xffffff00,
+        NETWORKINTERFACETYPE_MASK_DEVICE = 255
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0012;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0013 NetworkInterfaceType_Type;
+
+    typedef enum {
+        NETWORKINTERFACETYPE_TYPE_UNKNOWN = 0,
+        NETWORKINTERFACETYPE_TYPE_WIRED = 1,
+        NETWORKINTERFACETYPE_TYPE_WIRELESS = 2,
+        NETWORKINTERFACETYPE_TYPE_WIRELESS_11AC = 4,
+        NETWORKINTERFACETYPE_TYPE_WIRELESS_11AD = 8,
+        NETWORKINTERFACETYPE_TYPE_WIRELESS_LTE = 16,
+        NETWORKINTERFACETYPE_TYPE_WIRELESS_PPP = 32
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0013;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0014 NetworkInterfaceType_Device;
+
+    typedef enum {
+        NETWORKINTERFACETYPE_DEVICE_UNKNOWN = 0,
+        NETWORKINTERFACETYPE_DEVICE_E2200 = 1,
+        NETWORKINTERFACETYPE_DEVICE_E2400 = 2,
+        NETWORKINTERFACETYPE_DEVICE_E2500 = 3,
+        NETWORKINTERFACETYPE_DEVICE_E2600 = 4,
+        NETWORKINTERFACETYPE_DEVICE_E3000 = 5,
+        NETWORKINTERFACETYPE_DEVICE_E3000U = 6,
+        NETWORKINTERFACETYPE_DEVICE_E3100 = 7,
+        NETWORKINTERFACETYPE_DEVICE_E3100U = 8,
+        NETWORKINTERFACETYPE_DEVICE_E3100G = 9,
+        NETWORKINTERFACETYPE_DEVICE_1525 = 10,
+        NETWORKINTERFACETYPE_DEVICE_1535 = 11,
+        NETWORKINTERFACETYPE_DEVICE_1550 = 12,
+        NETWORKINTERFACETYPE_DEVICE_1650 = 13,
+        NETWORKINTERFACETYPE_DEVICE_AX500 = 14,
+        NETWORKINTERFACETYPE_DEVICE_AQUAN_5GIG = 15,
+        NETWORKINTERFACETYPE_DEVICE_AQUAN_10GIG = 16
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0014;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0015 NetworkInterfaceState;
+
+    typedef enum {
+        NETWORKINTERFACESTATE_DISCONNECTED = 0,
+        NETWORKINTERFACESTATE_CONNECTED = 1
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0015;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0016 WifiInterfaceState;
+
+    typedef enum {
+        WIFIINTERFACESTATE_NOTREADY = 0,
+        WIFIINTERFACESTATE_CONNECTED = 1,
+        WIFIINTERFACESTATE_ADHOCNETWORKFORMED = 2,
+        WIFIINTERFACESTATE_DISCONNECTING = 3,
+        WIFIINTERFACESTATE_DISCONNECTED = 4,
+        WIFIINTERFACESTATE_ASSOCIATING = 5,
+        WIFIINTERFACESTATE_DISCOVERING = 6,
+        WIFIINTERFACESTATE_AUTHENTICATING = 7
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0016;
+
+    typedef [public]
+    __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0017 GroupBoostState;
+
+    typedef enum {
+        GROUPBOOSTSTATE_MANUAL_OFF = 0,
+        GROUPBOOSTSTATE_MANUAL_ON = 1,
+        GROUPBOOSTSTATE_AUTO_OFF = 16,
+        GROUPBOOSTSTATE_AUTO_ON = 17
+    } __MIDL___MIDL_itf_KillerNetworkService_0001_0068_0017;
+
+    [
+      uuid(32734965-6470-4469-8D2F-3310F3E184A2)
+    ]
+    coclass ConfigurationManager {
+        [default] interface IConfigurationManager;
+    };
+
+    [
+      odl,
+      uuid(1E2D19E1-BF00-4A8E-89AB-1FCEF7E8B803),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IConfigurationManager : IDispatch {
+        [id(0x00000001), helpstring("Clears all configuration data saved by any application")]
+        HRESULT ClearConfigurationData();
+        [id(0x00000002), helpstring("Generic Get for Configuration Attribute/Value Pair")]
+        HRESULT GetConfigurationAttribute(
+                        [in] BSTR bstrAttribute, 
+                        [out, retval] VARIANT* pvValue);
+        [id(0x00000003), helpstring("Generic Set for Configuration Attribute/Value Pair")]
+        HRESULT SetConfigurationAttribute(
+                        [in] BSTR bstrAttribute, 
+                        [in] VARIANT vValue);
+        [id(0x00000004), helpstring("Generic Get for Attribute/Value Pair")]
+        HRESULT GetAttribute(
+                        [in] long lLocation, 
+                        [in] BSTR bstrLocation, 
+                        [in] BSTR bstrReserved, 
+                        [in] long lReserved, 
+                        [in] BSTR bstrAttribute, 
+                        [out, retval] VARIANT* pvValue);
+        [id(0x00000005), helpstring("Generic Set for Attribute/Value Pair")]
+        HRESULT SetAttribute(
+                        [in] long lLocation, 
+                        [in] BSTR bstrLocation, 
+                        [in] BSTR bstrReserved, 
+                        [in] long lReserved, 
+                        [in] BSTR bstrAttribute, 
+                        [in] VARIANT vValue);
+        [id(0x00000006), propget, helpstring("Gets the default Poll Interval")]
+        HRESULT PollInterval([out, retval] long* plPollInterval);
+        [id(0x00000007), helpstring("Gets the default Network Bandwidth Limits")]
+        HRESULT GetNetworkBandwidthDefaults(
+                        [out] int64* pi64BandwidthUp, 
+                        [out] int64* pi64BandwidthDown);
+        [id(0x00000008), propget, helpstring("Gets the Property of whether Bandwidth Control is Enabled")]
+        HRESULT BandwidthControlEnabled([out, retval] VARIANT_BOOL* pVal);
+        [id(0x00000008), propput, helpstring("Gets the Property of whether Bandwidth Control is Enabled")]
+        HRESULT BandwidthControlEnabled([in] VARIANT_BOOL pVal);
+        [id(0x00000009), propget, helpstring("Base Path Location For Help Files")]
+        HRESULT HelpBasePath([out, retval] BSTR* pVal);
+        [id(0x0000000a), propget, helpstring("Gets the Property of whether The Driver is Run")]
+        HRESULT RunDriver([out, retval] VARIANT_BOOL* pVal);
+        [id(0x0000000a), propput, helpstring("Gets the Property of whether The Driver is Run")]
+        HRESULT RunDriver([in] VARIANT_BOOL pVal);
+        [id(0x0000000b), propget, helpstring("Gets the Property of The DynamicBandwidthService Mode -- see enum DynamicBandwidthServiceModeType")]
+        HRESULT DynamicBandwidthServiceMode([out, retval] long* pVal);
+        [id(0x0000000b), propput, helpstring("Gets the Property of The DynamicBandwidthService Mode -- see enum DynamicBandwidthServiceModeType")]
+        HRESULT DynamicBandwidthServiceMode([in] long pVal);
+        [id(0x0000000c), propget, helpstring("Gets the Property of whether SpeedTest is run on Networks on Connect - see enum RunSpeedTestOnNetworkConnectType")]
+        HRESULT RunSpeedTestOnNetworkConnect([out, retval] long* pVal);
+        [id(0x0000000c), propput, helpstring("Gets the Property of whether SpeedTest is run on Networks on Connect - see enum RunSpeedTestOnNetworkConnectType")]
+        HRESULT RunSpeedTestOnNetworkConnect([in] long pVal);
+        [id(0x0000000d), propget, helpstring("Gets the Property of whether DataCollection is on/off")]
+        HRESULT DataCollection([out, retval] long* pVal);
+        [id(0x0000000d), propput, helpstring("Gets the Property of whether DataCollection is on/off")]
+        HRESULT DataCollection([in] long pVal);
+        [id(0x0000000e), propget, helpstring("Gets the Property of whether The APSuggestionService is Run")]
+        HRESULT RunAPSuggestionService([out, retval] VARIANT_BOOL* pVal);
+        [id(0x0000000e), propput, helpstring("Gets the Property of whether The APSuggestionService is Run")]
+        HRESULT RunAPSuggestionService([in] VARIANT_BOOL pVal);
+        [id(0x0000000f), helpstring("Generic Remove Configuration Attribute/Value Pair")]
+        HRESULT RemoveConfigurationAttribute([in] BSTR bstrAttribute);
+    };
+
+    [
+      uuid(1CB8AF81-3A9E-4234-8D3E-7607F807A723)
+    ]
+    coclass RulesManager {
+        [default] interface IRulesManager;
+    };
+
+    [
+      odl,
+      uuid(8485AF07-A179-4EE6-9707-A38E336FC137),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IRulesManager : IDispatch {
+        [id(0x00000001), helpstring("Clears all User Generated ProcessDomainRules")]
+        HRESULT ClearProcessDomainRules();
+        [id(0x00000002), helpstring("Gets the list of Processes")]
+        HRESULT GetProcessList(
+                        [in] VARIANT_BOOL bActive, 
+                        [out] SAFEARRAY(BSTR)* ppArrayName, 
+                        [out] SAFEARRAY(BSTR)* ppArrayDescription, 
+                        [out] SAFEARRAY(BSTR)* ppArrayImageName, 
+                        [out] SAFEARRAY(VARIANT_BOOL)* ppArrayActive, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInterfaceID, 
+                        [out] SAFEARRAY(long)* ppArrayRuleState, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthUsageUp, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthUsageDown, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthDroppedUp, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthDroppedDown, 
+                        [out] SAFEARRAY(long)* ppArrayCurrentAverageLatencyUp, 
+                        [out] SAFEARRAY(long)* ppArrayCurrentAverageLatencyDown);
+        [id(0x00000003), helpstring("Gets a Process Rule by Name")]
+        HRESULT GetProcessRule(
+                        [in] BSTR bstrProcessName, 
+                        [out] BSTR* pbstrCategory, 
+                        [out] VARIANT_BOOL* pbHidden, 
+                        [out] VARIANT_BOOL* pbPinned, 
+                        [out] long* plPriority, 
+                        [out] long* plBandwidthUp, 
+                        [out] long* plBandwidthDown);
+        [id(0x00000004), helpstring("Sets a Process Rule by Name")]
+        HRESULT SetProcessRule(
+                        [in] BSTR bstrProcessName, 
+                        [in] BSTR bstrProcessRule, 
+                        [in] BSTR bstrCategory, 
+                        [in] VARIANT_BOOL bHidden, 
+                        [in] VARIANT_BOOL bPinned, 
+                        [in] long lPriority, 
+                        [in] long lBandwidthUp, 
+                        [in] long lBandwidthDown);
+        [id(0x00000005), helpstring("Removes a User Generated Process Rule by Name")]
+        HRESULT RemoveProcessRule(
+                        [in] BSTR bstrProcessName, 
+                        [in] BSTR bstrProcessRule);
+        [id(0x00000006), helpstring("Gets the list of Domains")]
+        HRESULT GetDomainList(
+                        [in] VARIANT_BOOL bActive, 
+                        [out] SAFEARRAY(BSTR)* ppArrayName, 
+                        [out] SAFEARRAY(BSTR)* ppArrayDescription, 
+                        [out] SAFEARRAY(BSTR)* ppArrayImageName, 
+                        [out] SAFEARRAY(VARIANT_BOOL)* ppArrayActive, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInterfaceID, 
+                        [out] SAFEARRAY(long)* ppArrayRuleState, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthUsageUp, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthUsageDown, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthDroppedUp, 
+                        [out] SAFEARRAY(int64)* ppArrayCurrentBandwidthDroppedDown, 
+                        [out] SAFEARRAY(long)* ppArrayCurrentAverageLatencyUp, 
+                        [out] SAFEARRAY(long)* ppArrayCurrentAverageLatencyDown);
+        [id(0x00000007), helpstring("Gets a Domain Rule by Name")]
+        HRESULT GetDomainRule(
+                        [in] BSTR bstrDomainName, 
+                        [out] BSTR* pbstrCategory, 
+                        [out] VARIANT_BOOL* pbHidden, 
+                        [out] VARIANT_BOOL* pbPinned, 
+                        [out] long* plPriority, 
+                        [out] long* plBandwidthUp, 
+                        [out] long* plBandwidthDown);
+        [id(0x00000008), helpstring("Sets a Domain Rule by Name")]
+        HRESULT SetDomainRule(
+                        [in] BSTR bstrDomainName, 
+                        [in] BSTR bstrDomainRule, 
+                        [in] BSTR bstrCategory, 
+                        [in] VARIANT_BOOL bHidden, 
+                        [in] VARIANT_BOOL bPinned, 
+                        [in] long lPriority, 
+                        [in] long lBandwidthUp, 
+                        [in] long lBandwidthDown);
+        [id(0x00000009), helpstring("Removes a User Generated Domain Rule by Name")]
+        HRESULT RemoveDomainRule(
+                        [in] BSTR bstrDomainName, 
+                        [in] BSTR bstrDomainRule);
+        [id(0x0000000a), helpstring("Gets the list or Recent Domains - regardless of whether they have a rule")]
+        HRESULT GetRecentDomainList([out] SAFEARRAY(BSTR)* ppArrayName);
+    };
+
+    [
+      uuid(69904DCB-F6AB-4078-9CC3-1B3C48922A88)
+    ]
+    coclass FactoryManager {
+        [default] interface IFactoryManager;
+    };
+
+    [
+      odl,
+      uuid(67D729A5-39EB-4469-80E6-5CDF6E3F35B7),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IFactoryManager : IDispatch {
+        [id(0x00000001), helpstring("Returns the ServiceManager COM Object")]
+        HRESULT GetServiceManager([out, retval] IDispatch** ppServiceManager);
+        [id(0x00000002), helpstring("Returns the ConfigurationFileManager COM Object")]
+        HRESULT GetConfigurationFileManager([out, retval] IDispatch** ppConfigurationFileManager);
+        [id(0x00000003), helpstring("Returns the ConfigurationManager COM Object")]
+        HRESULT GetConfigurationManager([out, retval] IDispatch** ppConfigurationManaager);
+        [id(0x00000004), helpstring("Returns the NetworkManager COM Object")]
+        HRESULT GetNetworkManager([out, retval] IDispatch** ppNetworkManager);
+        [id(0x00000005), helpstring("Returns the RulesManager COM Object")]
+        HRESULT GetRulesManager([out, retval] IDispatch** ppRulesManager);
+        [id(0x00000006), helpstring("Returns the CategoriesManager COM Object")]
+        HRESULT GetCategoriesManager([out, retval] IDispatch** ppCategoriesManager);
+        [id(0x00000007), helpstring("Returns the SpeedTestManager COM Object")]
+        HRESULT GetSpeedTestManager([out, retval] IDispatch** ppSpeedTestManager);
+        [id(0x00000008), helpstring("Returns the MultiInterManager COM Object")]
+        HRESULT GetMultiInterfaceManager([out, retval] IDispatch** ppMultiInterfaceManager);
+        [id(0x00000009), helpstring("Returns the ActivityManager COM Object")]
+        HRESULT GetActivityManager([out, retval] IDispatch** ppActivityManager);
+        [id(0x0000000a), helpstring("Returns the GroupBoostManager COM Object")]
+        HRESULT GetGroupBoostManager([out, retval] IDispatch** ppGroupBoostManager);
+    };
+
+    [
+      uuid(C277A52B-7279-4155-85B9-C2CF36BBEEBF)
+    ]
+    coclass CategoriesManager {
+        [default] interface ICategoriesManager;
+    };
+
+    [
+      odl,
+      uuid(37B3C434-2E28-4366-88A1-772DAB3D29A2),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface ICategoriesManager : IDispatch {
+        [id(0x00000001), helpstring("Clears all User Generated Categories")]
+        HRESULT ClearCategories();
+        [id(0x00000002), helpstring("Gets the list of Categories")]
+        HRESULT GetCategoryList([out] SAFEARRAY(BSTR)* ppArrayName);
+        [id(0x00000003), helpstring("Gets a Category Rule by Name")]
+        HRESULT GetCategoryRule(
+                        [in] BSTR bstrCategoryName, 
+                        [out] VARIANT_BOOL* pbHidden, 
+                        [out] VARIANT_BOOL* pbPinned, 
+                        [out] long* plPriority, 
+                        [out] long* plBandwidthUp, 
+                        [out] long* plBandwidthDown);
+        [id(0x00000004), helpstring("Sets a Category Rule by Name")]
+        HRESULT SetCategoryRule(
+                        [in] BSTR bstrCategoryName, 
+                        [in] VARIANT_BOOL bHidden, 
+                        [in] VARIANT_BOOL bPinned, 
+                        [in] long lPriority, 
+                        [in] long lBandwidthUp, 
+                        [in] long lBandwidthDown);
+        [id(0x00000005), helpstring("Removes a User Generated Category Rule by Name")]
+        HRESULT RemoveCategoryRule([in] BSTR bstrCategoryName);
+    };
+
+    [
+      uuid(B90D4DE4-01A3-43FC-91E5-045D85F31C71)
+    ]
+    coclass SpeedTestManager {
+        [default] interface ISpeedTestManager;
+    };
+
+    [
+      odl,
+      uuid(2E482EC6-3F1C-45BF-B222-EB723A54B0CC),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface ISpeedTestManager : IDispatch {
+        [id(0x00000001), helpstring("Gets the details of the Speed test Server for the given index (index is zero based and ordered by latency 0 is closest/lowest latency)")]
+        HRESULT GetServerDetails(
+                        [in] long lServerIndex, 
+                        [out] BSTR* pbstrTargetHostName, 
+                        [out] BSTR* pbstrHostedBy, 
+                        [out] BSTR* pbstrServerLocation, 
+                        [out] BSTR* pbstrDistance, 
+                        [out] BSTR* pbstrLatency);
+        [id(0x00000002), helpstring("Runs the Upload Speed Test")]
+        HRESULT RunUploadTest(
+                        [in] long lNetworkInfoID, 
+                        [out] int64* pi64BandwidthUp);
+        [id(0x00000003), helpstring("Runs the Download Speed Test")]
+        HRESULT RunDownloadTest(
+                        [in] long lNetworkInfoID, 
+                        [out] int64* pi64BandwidthDown);
+        [id(0x00000004), propget, helpstring("Gets the state of whether SpeedTest is Running or Not")]
+        HRESULT IsRunning([out, retval] VARIANT_BOOL* pVal);
+        [id(0x00000005), helpstring("Cancels the Speed Test if its Running")]
+        HRESULT Cancel();
+    };
+
+    [
+      uuid(276F6D8C-BFB4-48D9-904C-515A7AB5716B)
+    ]
+    coclass ConfigurationFileManager {
+        [default] interface IConfigurationFileManager;
+    };
+
+    [
+      odl,
+      uuid(5301058F-E9CD-4D15-BD46-C6536D68EE83),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IConfigurationFileManager : IDispatch {
+        [id(0x00000001), helpstring("Downloads latest rn.stg XML Configuration File")]
+        HRESULT DownloadDataFiles();
+        [id(0x00000002), propget, hidden, helpstring("Gets the current Profile to be used")]
+        HRESULT CurrentProfile([out, retval] BSTR* pbstrCurrentProfile);
+        [id(0x00000002), propput, hidden, helpstring("Gets the current Profile to be used")]
+        HRESULT CurrentProfile([in] BSTR pbstrCurrentProfile);
+        [id(0x00000003), hidden, helpstring("Gets the base Rivet Networks Configuration File Content Version")]
+        HRESULT GetContentVersion([out] BSTR* pbstrVersion);
+    };
+
+    [
+      uuid(E662684F-8F8A-4636-9734-5FBF0ACBC2EE)
+    ]
+    coclass ServiceManager {
+        [default] interface IServiceManager;
+    };
+
+    [
+      odl,
+      uuid(0E6017F7-C75D-44E7-9BBA-AE555EBCF8F7),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IServiceManager : IDispatch {
+        [id(0x00000001), hidden, helpstring("Internal Diagnostics interface")]
+        HRESULT Diagnostics(
+                        [in] long lAction, 
+                        [in] long lParameter1, 
+                        [in] long lParameter2, 
+                        [in] BSTR bstrParameter3, 
+                        [out] SAFEARRAY(BSTR)* ppArrayDiagnosticResults);
+        [id(0x00000002), propget, helpstring("Returns the Driver State - see enum ServiceState")]
+        HRESULT DriverState([out, retval] long* pVal);
+        [id(0x00000003), helpstring("Returns the list of Services")]
+        HRESULT GetWin32ServiceList(
+                        [in] VARIANT_BOOL bOnlyActive, 
+                        [out] SAFEARRAY(BSTR)* ppArrayName, 
+                        [out] SAFEARRAY(BSTR)* ppArrayDisplayName, 
+                        [out] SAFEARRAY(BSTR)* ppArrayDescription, 
+                        [out] SAFEARRAY(long)* ppArrayServiceType, 
+                        [out] SAFEARRAY(long)* ppArrayServiceState);
+    };
+
+    [
+      uuid(FC518B3D-9422-4FC4-B143-40E4F137CF56)
+    ]
+    coclass MultiInterfaceManager {
+        [default] interface IMultiInterfaceManager;
+    };
+
+    [
+      odl,
+      uuid(F553DDF8-D93D-4426-B8D2-19144E520955),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IMultiInterfaceManager : IDispatch {
+        [id(0x00000001), propget, helpstring("Gets the Property of whether Multi-Interface is Enabled")]
+        HRESULT MultiInterfaceEnabled([out, retval] VARIANT_BOOL* pVal);
+        [id(0x00000001), propput, helpstring("Gets the Property of whether Multi-Interface is Enabled")]
+        HRESULT MultiInterfaceEnabled([in] VARIANT_BOOL pVal);
+        [id(0x00000002), propget, helpstring("Gets the Active MultiInterfaceRoutingManager Type")]
+        HRESULT MultiInterfaceRoutingManagerType([out, retval] long* pVal);
+        [id(0x00000003), helpstring("Returns the MultiInterfaceRoutingManager COM Object - lMultiInterfaceRoutingType ignored currently")]
+        HRESULT GetMultiInterfaceRoutingManager(
+                        [in] long lMultiInterfaceRoutingManagerType, 
+                        [out, retval] IDispatch** ppMultiInterfaceRoutingManager);
+    };
+
+    [
+      uuid(E422B429-D8A8-464E-B63A-31D9BFF8E782)
+    ]
+    coclass MultiInterfaceRoutingManagerType1 {
+        [default] interface IMultiInterfaceRoutingManagerType1;
+    };
+
+    [
+      odl,
+      uuid(18B64549-3762-4A12-94A2-1245BB812EC6),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IMultiInterfaceRoutingManagerType1 : IDispatch {
+        [id(0x00000001), helpstring("Clears all MultiInterface Routing Manager Type 1 Settings")]
+        HRESULT Clear();
+        [id(0x00000002), helpstring("Gets the MultiInterface Priority Routing Table")]
+        HRESULT GetPriorityRouting(
+                        [in] VARIANT_BOOL bActive, 
+                        [out] SAFEARRAY(long)* ppArraylPriority, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInterfaceType, 
+                        [out] SAFEARRAY(BSTR)* ppArrayNetworkInterfaceMACAddress);
+        [id(0x00000003), helpstring("Sets the MultiInterface Priority Routing Table")]
+        HRESULT SetPriorityRouting(
+                        [in] SAFEARRAY(long) pArraylPriority, 
+                        [in] SAFEARRAY(long) pArrayNetworkInterfaceType, 
+                        [in] SAFEARRAY(BSTR) pArrayNetworkInterfaceMACAddress);
+    };
+
+    [
+      uuid(8B59E224-0FC6-4643-A378-39F1B934D63D)
+    ]
+    coclass MultiInterfaceRoutingManagerType2 {
+        [default] interface IMultiInterfaceRoutingManagerType2;
+    };
+
+    [
+      odl,
+      uuid(4478CEFF-1578-4B07-9E78-F337B87A3769),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IMultiInterfaceRoutingManagerType2 : IDispatch {
+        [id(0x00000001), helpstring("Clears all MultiInterface Routing Manager Type 2 Settings")]
+        HRESULT Clear();
+        [id(0x00000002), helpstring("Gets the MultiInterface Priority Routing Table")]
+        HRESULT GetPriorityRouting(
+                        [in] VARIANT_BOOL bActive, 
+                        [out] SAFEARRAY(long)* ppArraylPriority, 
+                        [out] SAFEARRAY(long)* ppArrayNetworkInterfaceType, 
+                        [out] SAFEARRAY(BSTR)* ppArrayNetworkInterfaceMACAddress);
+        [id(0x00000003), helpstring("Sets the MultiInterface Priority Routing Table")]
+        HRESULT SetPriorityRouting(
+                        [in] SAFEARRAY(long) pArraylPriority, 
+                        [in] SAFEARRAY(long) pArrayNetworkInterfaceType, 
+                        [in] SAFEARRAY(BSTR) pArrayNetworkInterfaceMACAddress);
+        [id(0x00000004), helpstring("Gets the MultiInterface Type Order")]
+        HRESULT GetTypeOrder([out] SAFEARRAY(long)* ppArrayNetworkInterfaceType);
+        [id(0x00000005), helpstring("Sets the MultiInterface Type Order")]
+        HRESULT SetTypeOrder([in] SAFEARRAY(long) pArrayNetworkInterfaceType);
+        [id(0x00000006), propget, helpstring("Gets the SignalStrengthMinimum")]
+        HRESULT SignalStrengthMinimum([out, retval] long* pVal);
+        [id(0x00000006), propput, helpstring("Gets the SignalStrengthMinimum")]
+        HRESULT SignalStrengthMinimum([in] long pVal);
+    };
+
+    [
+      uuid(BC4F2826-D14C-4316-ACCB-C0969DE2D96E)
+    ]
+    coclass ActivityManager {
+        [default] interface IActivityManager;
+    };
+
+    [
+      odl,
+      uuid(A2FEE54C-5AC0-434D-B94F-13E886E4EAC5),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IActivityManager : IDispatch {
+        [id(0x00000001), propget, helpstring("Gets the Property of whether ActivityRules is Enabled")]
+        HRESULT ActivityRulesEnabled([out, retval] VARIANT_BOOL* pVal);
+        [id(0x00000001), propput, helpstring("Gets the Property of whether ActivityRules is Enabled")]
+        HRESULT ActivityRulesEnabled([in] VARIANT_BOOL pVal);
+        [id(0x00000002), helpstring("Clears all User Generated PriorityConnectionCountTriggeredRules")]
+        HRESULT ClearPriorityConnectionCountTriggeredRules();
+        [id(0x00000003), helpstring("Gets the list ofPriorityConnectionCountTrigger Rules")]
+        HRESULT GetPriorityConnectionCountTriggeredRuleList(
+                        [out] SAFEARRAY(long)* ppArraylPriority, 
+                        [out] SAFEARRAY(long)* ppArraylCurrentPortCount, 
+                        [out] SAFEARRAY(long)* ppArraylPreviousPortCount);
+        [id(0x00000004), helpstring("Gets the Rule for a PriorityConnectionCountTrigger ")]
+        HRESULT GetPriorityConnectionCountTriggeredRule(
+                        [in] long lPriority, 
+                        [in] long lCurrentPortCount, 
+                        [in] long lPreviousPortCount, 
+                        [out] SAFEARRAY(BSTR)* ppArrayServiceName, 
+                        [out] SAFEARRAY(long)* pArrayplDesiredServiceState, 
+                        [out] SAFEARRAY(VARIANT_BOOL)* pArraybWait);
+        [id(0x00000005), helpstring("Sets the Rule for a PriorityConnectionCountTrigger ")]
+        HRESULT SetPriorityConnectionCountTriggeredRule(
+                        [in] long lPriority, 
+                        [in] long lCurrentPortCount, 
+                        [in] long lPreviousPortCount, 
+                        [in] SAFEARRAY(BSTR) pArrayServiceName, 
+                        [in] SAFEARRAY(long) pArraylDesiredServiceState, 
+                        [in] SAFEARRAY(VARIANT_BOOL) pArraybWait);
+        [id(0x00000006), helpstring("Removes a User Generated PriorityConnectionCountTriggeredRule")]
+        HRESULT RemovePriorityConnectionCountTriggeredRule(
+                        [in] long lPriority, 
+                        [in] long lCurrentPortCount, 
+                        [in] long lPreviousPortCount);
+    };
+
+    [
+      uuid(DC45372A-168D-4F16-8546-986E3369CCA7)
+    ]
+    coclass GroupBoostManager {
+        [default] interface IGroupBoostManager;
+    };
+
+    [
+      odl,
+      uuid(6DA98B60-FCF1-4482-BDBA-0B2B2332CB4D),
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface IGroupBoostManager : IDispatch {
+        [id(0x00000001), propget, helpstring("Gets the Property of the GroupBoost Enabled State - see enum GroupBoostState")]
+        HRESULT GroupBoostEnabledState([out, retval] long* pVal);
+        [id(0x00000001), propput, helpstring("Gets the Property of the GroupBoost Enabled State - see enum GroupBoostState")]
+        HRESULT GroupBoostEnabledState([in] long pVal);
+        [id(0x00000002), helpstring("Clears all User Generated Boosted Groups")]
+        HRESULT ClearBoostedGroups();
+        [id(0x00000003), helpstring("Gets the CPU/Memory Statistics for the stopped services - only valid when Running/Active")]
+        HRESULT GetBoostedGroupActiveStastics(
+                        [out] long* plCPUUsage, 
+                        [out] int64* pi64MemoryUsage, 
+                        [out] long* plReserved1, 
+                        [out] long* plReserved2);
+        [id(0x00000004), helpstring("Gets the list BoostedPriorities")]
+        HRESULT GetBoostedGroupPriorityList([out] SAFEARRAY(long)* ppArraylPriority);
+        [id(0x00000005), helpstring("Gets the Rules for a BoostedPriority")]
+        HRESULT GetBoostedGroupPriorityActionList(
+                        [in] long lPriority, 
+                        [out] SAFEARRAY(BSTR)* ppArrayServiceName, 
+                        [out] SAFEARRAY(long)* ppArrayServiceStartType, 
+                        [out] SAFEARRAY(long)* ppArrayServiceState, 
+                        [out] SAFEARRAY(VARIANT_BOOL)* ppArrayWait);
+        [id(0x00000006), helpstring("Sets the Rules for a BoostedPriority")]
+        HRESULT SetBoostedGroupPriorityActionList(
+                        [in] long lPriority, 
+                        [in] SAFEARRAY(BSTR) pArrayServiceName, 
+                        [in] SAFEARRAY(long) pArrayServiceStartType, 
+                        [in] SAFEARRAY(long) pArrayServiceState, 
+                        [in] SAFEARRAY(VARIANT_BOOL) pArrayWait);
+        [id(0x00000007), helpstring("Clears all User Generated Boosted Group Action List for the Priority")]
+        HRESULT ClearBoostedGroupPriorityActionList([in] long lPriority);
+        [id(0x00000008), helpstring("Gets the list BoostedCategories")]
+        HRESULT GetBoostedGroupCategoryList([out] SAFEARRAY(BSTR)* ppArrayCategory);
+        [id(0x00000009), helpstring("Gets the Rules for a BoostedCategories")]
+        HRESULT GetBoostedGroupCategoryActionList(
+                        [in] BSTR bstrCategory, 
+                        [out] SAFEARRAY(BSTR)* ppArrayServiceName, 
+                        [out] SAFEARRAY(long)* ppArrayServiceStartType, 
+                        [out] SAFEARRAY(long)* ppArrayServiceState, 
+                        [out] SAFEARRAY(VARIANT_BOOL)* ppArrayWait);
+        [id(0x0000000a), helpstring("Sets the Rules for a BoostedCategories")]
+        HRESULT SetBoostedGroupCategoryActionList(
+                        [in] BSTR bstrCategory, 
+                        [in] SAFEARRAY(BSTR) pArrayServiceName, 
+                        [in] SAFEARRAY(long) pArrayServiceStartType, 
+                        [in] SAFEARRAY(long) pArrayServiceState, 
+                        [in] SAFEARRAY(VARIANT_BOOL) pArrayWait);
+        [id(0x0000000b), helpstring("Clears all User Generated Boosted Group Action List for the Category")]
+        HRESULT ClearBoostedGroupCategoryActionList([in] BSTR bstrCategory);
+    };
+};
