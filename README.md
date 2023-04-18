@@ -1,4 +1,4 @@
-This repository contains supporting files for the PoC of a vulnerability in the Intel Killer Performance Suite. See the [blogpost](https://zwclose.github.io/) for details of the vuln.
+This repository contains supporting files for the PoC of a vulnerability in the Intel Killer Performance Suite. See the [blogpost](https://zwclose.github.io/2023/04/18/killer2.html) for details of the vuln.
 
 **List of files**:
 * WindowsUpdate.ps1: blocks network access for all svchost.exe processes in the OS. As result, Windows update stops working
@@ -7,4 +7,4 @@ This repository contains supporting files for the PoC of a vulnerability in the 
 * KillerNetworkService.idl: IDL of Killer's COM server
 * KillerCheck.ps1: checks whether Killer's COM server is patched or not
 
-For details of the vulnerability and the demo video refer to the [blogpost](https://zwclose.github.io/). Feel free to ask questions in [Twitter](https://twitter.com/zwclose)
+For details of the vulnerability and the demo video refer to the [blogpost](https://zwclose.github.io/2023/04/18/killer2.html). Feel free to ask questions in [Twitter](https://twitter.com/zwclose)
